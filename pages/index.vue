@@ -1,9 +1,7 @@
-<script lang="ts" setup></script>
+<script setup>
+import MainLayout from '~/layouts/MainLayout.vue';
+</script>
 
 <template>
-	<div class="bg-red-500 text-white text-3xl text-center py-6 font-bold">
-		Test
-
-		<Icon name="🚀" size="100" />
-	</div>
+    <MainLayout> </MainLayout>
 </template>
