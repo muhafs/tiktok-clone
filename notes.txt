@@ -10,6 +10,6 @@ AUTH / BACKEND (for install select api)
 composer require laravel/breeze --dev
 php artisan breeze:install 
 
-App\Models\User::create(["name"=> "John Weeks Dev","email"=>"john@m.com","password"=>bcrypt("123123123")]);
+App\Models\User::create(["name"=> "John Weeks Dev","email"=>"john@m.com","password"=>bcrypt("password")]);
 
 
