@@ -12,5 +12,7 @@ const route = useRoute();
         <div>
             <SideNavMain />
         </div>
+
+        <slot />
     </div>
 </template>
