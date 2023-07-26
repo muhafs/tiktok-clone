@@ -1,8 +1,66 @@
 <script setup>
-import UploadLayout from '~/layouts/UploadLayout.vue';
+import UploadLayout from '~/layouts/UploadLayout.vue'
+
+let file = ref(null)
+let fileDisplay = ref(null)
+let fileData = ref(null)
+let caption = ref('')
+let errorType = ref(null)
+let errors = ref(null)
+let isUploading = ref(false)
+
+watch(
+    () => caption.value,
+    (caption) => {
+        if (caption.length >= 150) {
+            errorType.value = 'caption'
+            return
+        }
+
+        errorType.value = null
+    }
+)
+
+const onChange = () => {
+    fileDisplay.value = URL.createObjectURL(file.value.files[0])
+    fileData.value = file.value.files[0]
+}
+
+const onDrop = (e) => {
+    errorType.value = ''
+    file.value = e.dataTransfer.files[0]
+    fileData.value = e.dataTransfer.files[0]
+
+    console.log(file.value.name)
+    let extension = file.value.name.substring(
+        file.value.name.lastIndexOf('.') + 1
+    )
+
+    if (extension !== 'mp4') {
+        errorType.value = 'file'
+        return
+    }
+
+    fileDisplay.value = URL.createObjectURL(e.dataTransfer.files[0])
+}
+
+const onDiscard = () => {
+    file.value = null
+    fileData.value = null
+    fileDisplay.value = null
+    caption.value = ''
+}
+
+const clearVideo = () => {
+    file.value = null
+    fileData.value = null
+    fileDisplay.value = null
+}
 </script>
 
 <template>
+    <UploadError :errorType="errorType" />
+
     <UploadLayout>
         <div
             class="mb-[40px] mt-[80px] w-full rounded-md bg-white px-4 py-6 shadow-lg md:px-10"
@@ -17,8 +75,10 @@ import UploadLayout from '~/layouts/UploadLayout.vue';
 
             <div class="gap-6 md:flex">
                 <label
-                    v-if="false"
-                    for="fileInout"
+                    v-if="!fileDisplay"
+                    @drop.prevent="onDrop"
+                    @dragover.prevent="($event) => {}"
+                    for="fileInput"
                     class="mx-auto mb-6 mt-4 flex h-[470px] w-full max-w-[260px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-3 text-center hover:bg-gray-100 md:mx-0"
                 >
                     <Icon
@@ -47,6 +107,7 @@ import UploadLayout from '~/layouts/UploadLayout.vue';
                     </div>
 
                     <input
+                        @input="onChange"
                         id="fileInput"
                         ref="file"
                         type="file"
@@ -75,10 +136,10 @@ import UploadLayout from '~/layouts/UploadLayout.vue';
                     />
 
                     <video
+                        :src="fileDisplay"
                         autoplay
                         loop
                         muted
-                        src="/animal.mp4"
                         class="absolute z-10 h-full w-full rounded-xl object-cover p-[13px]"
                     />
 
@@ -93,11 +154,14 @@ import UploadLayout from '~/layouts/UploadLayout.vue';
                             />
 
                             <div class="truncate pl-1 text-[11px]">
-                                video name
+                                {{ fileData.name }}
                             </div>
                         </div>
 
-                        <button class="ml-2 text-[11px] font-semibold">
+                        <button
+                            @click="clearVideo"
+                            class="ml-2 text-[11px] font-semibold"
+                        >
                             Change
                         </button>
                     </div>
@@ -141,10 +205,13 @@ import UploadLayout from '~/layouts/UploadLayout.vue';
                     <div class="mt-5">
                         <div class="flex items-center justify-between">
                             <div class="mb-1 text-[15px]">Caption</div>
-                            <div class="text-[12px] text-gray-400">0/150</div>
+                            <div class="text-[12px] text-gray-400">
+                                {{ caption.length }}/150
+                            </div>
                         </div>
 
                         <input
+                            v-model="caption"
                             type="text"
                             maxlength="150"
                             class="w-full rounded-md border p-2.5 focus:outline-none"
@@ -153,6 +220,7 @@ import UploadLayout from '~/layouts/UploadLayout.vue';
 
                     <div class="flex gap-3">
                         <button
+                            @click.prevent="onDiscard"
                             class="mt-8 rounded-sm border px-10 py-2.5 text-[16px] hover:bg-gray-100"
                         >
                             Discard
