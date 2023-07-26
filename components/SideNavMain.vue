@@ -40,7 +40,7 @@ const route = useRoute();
             </div>
 
             <button
-                class="hidden pl-2 pt-1.5 text-[13px] text-[#f02c56] lg:block"
+                class="hidden pl-2 pt-1.5 text-[13px] text-primary lg:block"
             >
                 See all
             </button>
@@ -60,7 +60,7 @@ const route = useRoute();
             </div>
 
             <button
-                class="hidden pl-2 pt-1.5 text-[13px] text-[#f02c56] lg:block"
+                class="hidden pl-2 pt-1.5 text-[13px] text-primary lg:block"
             >
                 See more
             </button>

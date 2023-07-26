@@ -59,7 +59,7 @@ let showMenu = ref(false);
                 <!--! Log in Button -->
                 <div v-if="false" class="flex items-center">
                     <button
-                        class="flex items-center rounded-md border bg-[#f02c56] px-3 py-[6px] text-white"
+                        class="flex items-center rounded-md border bg-primary px-3 py-[6px] text-white"
                     >
                         <span class="mx-4 text-[15px] font-medium">Log in</span>
                     </button>
