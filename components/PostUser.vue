@@ -50,18 +50,18 @@ defineProps(['post'])
 const route = useRoute()
 const router = useRouter()
 
-let video = ref(null)
-let isLoaded = ref(false)
+const video = ref(null)
+const isLoaded = ref(false)
 
 onMounted(() => {
     if (video.value) {
-        video.value.addEventListener('loadeddata', (e) => {
-            if (e.target) {
-                setTimeout(() => {
-                    isLoaded.value = true
-                }, 200)
-            }
-        })
+        //     video.value.addEventListener('loadeddata', (e) => {
+        //         if (e.target) {
+        setTimeout(() => {
+            isLoaded.value = true
+        }, 200)
+        //         }
+        //     })
     }
 })
 
