@@ -1,8 +1,3 @@
-<script setup>
-const route = useRoute();
-let showMenu = ref(false);
-</script>
-
 <template>
     <div
         id="TopNav"
@@ -57,8 +52,9 @@ let showMenu = ref(false);
                 </button>
 
                 <!--! Log in Button -->
-                <div v-if="false" class="flex items-center">
+                <div v-if="!$userStore.id" class="flex items-center">
                     <button
+                        @click="$generalStore.isLoginOpen = true"
                         class="flex items-center rounded-md border bg-primary px-3 py-[6px] text-white"
                     >
                         <span class="mx-4 text-[15px] font-medium">Log in</span>
@@ -68,7 +64,7 @@ let showMenu = ref(false);
                 </div>
 
                 <!--! Profile Buttons -->
-                <div class="flex items-center">
+                <div v-else class="flex items-center">
                     <Icon
                         name="carbon:send-alt"
                         color="#161724"
@@ -127,3 +123,10 @@ let showMenu = ref(false);
         </div>
     </div>
 </template>
+
+<script setup>
+const { $userStore, $generalStore } = useNuxtApp()
+
+const route = useRoute()
+let showMenu = ref(false)
+</script>

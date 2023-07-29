@@ -8,7 +8,10 @@
         >
             <!--? Close Button Section -->
             <div class="flex w-full justify-end">
-                <button class="rounded-full bg-gray-100 p-1.5">
+                <button
+                    @click="$generalStore.isLoginOpen = false"
+                    class="rounded-full bg-gray-100 p-1.5"
+                >
                     <Icon name="mdi:close" size="26" />
                 </button>
             </div>
@@ -38,5 +41,7 @@
 </template>
 
 <script setup>
+const { $generalStore } = useNuxtApp()
+
 const isRegister = ref(true)
 </script>
