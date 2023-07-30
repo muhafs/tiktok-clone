@@ -1,5 +1,7 @@
 <script setup>
 import MainLayout from '~/layouts/MainLayout.vue'
+
+const { $generalStore } = useNuxtApp()
 </script>
 
 <template>
@@ -20,6 +22,7 @@ import MainLayout from '~/layouts/MainLayout.vue'
 
                     <button
                         v-if="true"
+                        @click="$generalStore.isEditProfileOpen = true"
                         class="mt-3 flex items-center rounded-md border px-3.5 py-1.5 text-[15px] font-semibold hover:bg-gray-100"
                     >
                         <Icon name="mdi:pencil" size="18" class="mr-1 mt-0.5" />
