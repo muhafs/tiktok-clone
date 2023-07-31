@@ -79,10 +79,7 @@
                     />
 
                     <div class="relative">
-                        <button
-                            @click="($event) => (showMenu = !showMenu)"
-                            class="mt-1"
-                        >
+                        <button @click="showMenu = !showMenu" class="mt-1">
                             <img
                                 src="https://picsum.photos/id/83/300/320"
                                 alt="profile image"
@@ -97,7 +94,7 @@
                             class="absolute -right-2 top-[43px] w-[200px] rounded-lg border bg-white py-1.5 shadow-xl"
                         >
                             <NuxtLink
-                                @click="($event) => (showMenu = false)"
+                                @click="showMenu = false"
                                 class="flex cursor-pointer items-center justify-start px-2 py-3 hover:bg-gray-100"
                             >
                                 <Icon name="ph:user" size="20" />
@@ -128,5 +125,5 @@
 const { $userStore, $generalStore } = useNuxtApp()
 
 const route = useRoute()
-let showMenu = ref(false)
+const showMenu = ref(false)
 </script>
