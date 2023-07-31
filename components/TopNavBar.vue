@@ -45,6 +45,7 @@
             >
                 <!--! Upload Button -->
                 <button
+                    @click="isLoggedIn()"
                     class="flex items-center rounded-sm border px-3 py-[6px] hover:bg-gray-100"
                 >
                     <Icon name="mdi:plus" color="#000000" size="22" />
@@ -81,7 +82,7 @@
                     <div class="relative">
                         <button @click="showMenu = !showMenu" class="mt-1">
                             <img
-                                src="https://picsum.photos/id/83/300/320"
+                                :src="$userStore.image"
                                 alt="profile image"
                                 width="33"
                                 class="rounded-full"
@@ -94,6 +95,7 @@
                             class="absolute -right-2 top-[43px] w-[200px] rounded-lg border bg-white py-1.5 shadow-xl"
                         >
                             <NuxtLink
+                                :to="`/profile/${$userStore.id}`"
                                 @click="showMenu = false"
                                 class="flex cursor-pointer items-center justify-start px-2 py-3 hover:bg-gray-100"
                             >
@@ -105,6 +107,7 @@
                             </NuxtLink>
 
                             <div
+                                @click="logout()"
                                 class="flex cursor-pointer items-center justify-start border-t px-1.5 py-3 hover:bg-gray-100"
                             >
                                 <Icon name="ic:outline-login" size="20" />
@@ -125,5 +128,33 @@
 const { $userStore, $generalStore } = useNuxtApp()
 
 const route = useRoute()
+const router = useRouter()
+
 const showMenu = ref(false)
+
+onMounted(() => {
+    document.addEventListener('mouseup', (e) => {
+        let popUpMenu = document.getElementById('PopUpMenu')
+        if (!popUpMenu.contains(e.target)) {
+            showMenu.value = false
+        }
+    })
+})
+
+const isLoggedIn = () => {
+    if ($userStore.id) {
+        router.push('/upload')
+    } else {
+        $userStore.isLoginOpen = true
+    }
+}
+
+const logout = async () => {
+    try {
+        $userStore.logout()
+        router.push('/')
+    } catch (error) {
+        console.log(error)
+    }
+}
 </script>
